@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konverter Basa Walikan Jogja & Aksara Jawa (KAJ I 2021)</title>
+    <style>
+        /* Palet Warna Pinky Lembut Khas Hello Kitty */
+        :root {
+            --hijau-keraton: #D81B60;
+            --hijau-hover: #AD1457;
+            --emas-prada: #FF80AB;
+            --emas-muda: #FCE4EC;
+            --putih-gading: #FFF5F8;
+            --merah-soga: #E91E63;
+            --abu-halus: #F8BBD0;
+            --teks-gelap: #3E1F2B;
+            --teks-sekunder: #7B4B5E;
+            --putih-murni: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--putih-gading);
+            color: var(--teks-gelap);
+            margin: 0;
+            padding: 16px;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 860px;
+            background: var(--putih-murni);
+            border-radius: 14px;
+            box-shadow: 0 8px 30px rgba(216, 27, 96, 0.16);
+            overflow: hidden;
+            border: 2px solid var(--emas-prada);
+            margin: 12px 0;
+        }
+
+        /* Header Bernuansa Pinky */
+        header {
+            background: linear-gradient(135deg, #F06292 0%, #D81B60 100%);
+            color: var(--putih-murni);
+            padding: 28px 24px;
+            text-align: center;
+            border-bottom: 5px solid #FF80AB;
+            position: relative;
+        }
+
+        .ornament-line {
+            width: 80px;
+            height: 4px;
+            background: #FFE4EC;
+            margin: 0 auto 12px auto;
+            border-radius: 999px;
+        }
+
+        header h1 {
+            margin: 0 0 8px 0;
+            font-size: 1.65rem;
+            letter-spacing: 0.6px;
+            font-weight: 700;
+        }
+
+        header p {
+            margin: 0;
+            font-size: 0.94rem;
+            color: #FFE4EC;
+            opacity: 0.96;
+        }
+
+        .content {
+            padding: 24px;
+        }
+
+        /* Baris Kontrol Atas */
+        .controls-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            background-color: #FFF0F5;
+            padding: 16px;
+            border-radius: 10px;
+            border: 1px solid var(--abu-halus);
+        }
+
+        .control-group {
+            flex: 1;
+            min-width: 240px;
+        }
+
+        label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--hijau-keraton);
+            font-size: 0.94rem;
+        }
+
+        select, textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid var(--abu-halus);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            background-color: var(--putih-murni);
+            color: var(--teks-gelap);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--hijau-keraton);
+            box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.18);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 105px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background-color: var(--hijau-keraton);
+            color: var(--putih-murni);
+            border: 1.5px solid var(--hijau-keraton);
+            padding: 11px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.92rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        button:hover {
+            background-color: var(--hijau-hover);
+            transform: translateY(-1px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button.btn-clear {
+            background-color: var(--putih-murni);
+            color: var(--merah-soga);
+            border-color: var(--merah-soga);
+        }
+
+        button.btn-clear:hover {
+            background-color: var(--merah-soga);
+            color: var(--putih-murni);
+        }
+
+        /* Keyboard Virtual Diakritik */
+        .diacritic-toolbar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+
+        .diacritic-label {
+            font-size: 0.82rem;
+            color: var(--teks-sekunder);
+            font-weight: 600;
+        }
+
+        .diacritic-btn {
+            background-color: #FFF0F5;
+            color: var(--hijau-keraton);
+            border: 1.5px solid var(--emas-prada);
+            padding: 5px 13px;
+            border-radius: 6px;
+            font-size: 0.98rem;
+            font-weight: 700;
+            min-width: 38px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .diacritic-btn:hover {
+            background-color: var(--hijau-keraton);
+            color: var(--putih-murni);
+            border-color: var(--hijau-keraton);
+        }
+
+        /* Kotak Hasil */
+        .result-card {
+            background-color: #FFF0F5;
+            border-left: 5px solid var(--emas-prada);
+            padding: 16px 20px;
+            border-radius: 0 10px 10px 0;
+            margin-top: 16px;
+            border-top: 1px solid var(--abu-halus);
+            border-right: 1px solid var(--abu-halus);
+            border-bottom: 1px solid var(--abu-halus);
+        }
+
+        .result-card.aksara-card {
+            border-left-color: var(--merah-soga);
+            background-color: #FFF7FA;
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+
+        .result-label {
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.9px;
+            color: var(--merah-soga);
+            font-weight: 700;
+        }
+
+        .copy-btn {
+            padding: 5px 12px;
+            font-size: 0.8rem;
+            background-color: var(--putih-murni);
+            color: var(--hijau-keraton);
+            border: 1px solid var(--emas-prada);
+            border-radius: 6px;
+        }
+
+        .copy-btn:hover {
+            background-color: var(--emas-prada);
+            color: var(--putih-murni);
+        }
+
+        .result-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--hijau-keraton);
+            word-break: break-word;
+            min-height: 1.6em;
+            white-space: pre-wrap;
+        }
+
+        .result-aksara {
+            font-size: 2.1rem;
+            line-height: 1.8;
+            color: #141414;
+            word-break: break-word;
+            min-height: 1.8em;
+            white-space: pre-wrap;
+            font-family: 'Noto Sans Javanese', 'Tuladha Jejeg', 'Javanese Text', sans-serif;
+        }
+
+        /* Tabel Referensi Carakan 4 Baris */
+        .reference-section {
+            margin-top: 30px;
+            background-color: #FFF0F5;
+            border: 1.5px solid var(--emas-prada);
+            border-radius: 10px;
+            padding: 18px;
+        }
+
+        .reference-section h3 {
+            margin: 0 0 6px 0;
+            color: var(--hijau-keraton);
+            font-size: 1.05rem;
+        }
+
+        .reference-desc {
+            font-size: 0.88rem;
+            color: var(--teks-sekunder);
+            margin: 0 0 14px 0;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table.carakan-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            background-color: var(--putih-murni);
+            font-size: 0.9rem;
+        }
+
+        table.carakan-table th,
+        table.carakan-table td {
+            border: 1px solid var(--abu-halus);
+            padding: 10px 8px;
+        }
+
+        table.carakan-table th {
+            background-color: var(--hijau-keraton);
+            color: var(--putih-murni);
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        table.carakan-table tr.row-baris-1 td {
+            background-color: #FFF5F8;
+        }
+
+        table.carakan-table tr.row-baris-2 td {
+            background-color: #FCE4EC;
+        }
+
+        table.carakan-table tr.row-baris-3 td {
+            background-color: #FFF5F8;
+        }
+
+        table.carakan-table tr.row-baris-4 td {
+            background-color: #FCE4EC;
+        }
+
+        .swap-badge {
+            display: inline-block;
+            background-color: var(--merah-soga);
+            color: var(--putih-murni);
+            font-size: 0.72rem;
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .jawa-char {
+            display: block;
+            font-size: 1.35rem;
+            color: var(--hijau-keraton);
+            line-height: 1.3;
+        }
+
+        .latin-char {
+            font-weight: 700;
+            color: var(--teks-gelap);
+        }
+
+        /* Notifikasi Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background-color: var(--hijau-keraton);
+            color: var(--putih-murni);
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: 1.5px solid var(--emas-prada);
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 4px 16px rgba(216, 27, 96, 0.25);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.25s, transform 0.25s;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 8px;
+            }
+            header {
+                padding: 20px 16px;
+            }
+            header h1 {
+                font-size: 1.35rem;
+            }
+            .content {
+                padding: 16px;
+            }
+            .result-aksara {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="ornament-line"></div>
+        <h1>KONVERTER BASA WALIKAN JOGJA</h1>
+        <p>(ꦛꦺꦴꦭ꧀ꦧꦫꦸꦚ꧀ꦲꦾꦧꦕ / Thol Baruny Hyabaca)</p>
+    </header>
+
+    <div class="content">
+        <!-- Kontrol Arah dan Aksi -->
+        <div class="controls-bar">
+            <div class="control-group">
+                <label for="conversionMode">Arah Konversi:</label>
+                <select id="conversionMode" onchange="handleConvert()">
+                    <option value="to-walikan">Bahasa Indonesia / Jawa / Daerah ➔ Basa Walikan</option>
+                    <option value="from-walikan">Basa Walikan ➔ Bahasa Indonesia / Jawa / Daerah</option>
+                </select>
+            </div>
+            <div class="action-buttons">
+                <button type="button" onclick="swapDirection()" title="Tukar arah konversi beserta teksnya">
+                    ⇄ Tukar Arah
+                </button>
+                <button type="button" class="btn-clear" onclick="clearInput()" title="Bersihkan kolom input">
+                    ✕ Hapus
+                </button>
+            </div>
+        </div>
+
+        <!-- Input Teks -->
+        <div>
+            <label for="inputText" id="inputLabel">Masukkan Teks (Bahasa Indonesia, Jawa, atau Bahasa Daerah Lain):</label>
+            <textarea id="inputText" placeholder="Ketik kata atau kalimat dari Bahasa Indonesia, Jawa, maupun bahasa daerah lain... (Contoh: makan siang, matamu, kumaha damang, sanak saudara)" oninput="handleConvert()"></textarea>
+            <div class="diacritic-toolbar" aria-label="Keyboard virtual huruf berdiakritik taling">
+                <span class="diacritic-label">Sisipkan Taling:</span>
+                <button type="button" class="diacritic-btn" onclick="insertDiacritic('é')" title="Taling jegeg kecil (é)">é</button>
+                <button type="button" class="diacritic-btn" onclick="insertDiacritic('è')" title="Taling miring kecil (è)">è</button>
+                <button type="button" class="diacritic-btn" onclick="insertDiacritic('É')" title="Taling jegeg kapital (É)">É</button>
+                <button type="button" class="diacritic-btn" onclick="insertDiacritic('È')" title="Taling miring kapital (È)">È</button>
+            </div>
+        </div>
+
+        <!-- Hasil 1: Konversi Teks -->
+        <div class="result-card">
+            <div class="result-header">
+                <span class="result-label" id="textResultTitle">Hasil Konversi ke Basa Walikan:</span>
+                <button type="button" class="copy-btn" onclick="copyToClipboard('textResult')">Salin Teks</button>
+            </div>
+            <div id="textResult" class="result-text">-</div>
+        </div>
+
+        <!-- Hasil 2: Aksara Jawa (Selalu merender Basa Walikan) -->
+        <div class="result-card aksara-card">
+            <div class="result-header">
+                <span class="result-label" id="aksaraResultTitle">Aksara Jawa dari Basa Walikan (KAJ I 2021):</span>
+                <button type="button" class="copy-btn" onclick="copyToClipboard('aksaraResult')">Salin Aksara</button>
+            </div>
+            <div id="aksaraResult" class="result-aksara">-</div>
+        </div>
+
+        <!-- Tabel Referensi Pertukaran Konsonan Carakan 4 Baris -->
+        <div class="reference-section">
+            <h3>Tabel Rumus Pertukaran Konsonan Carakan (Walikan Jogja)</h3>
+            <p class="reference-desc">
+                Rumus Basa Walikan Yogyakarta bekerja secara <strong>fonetik universal</strong>—dapat diterapkan pada kosakata <strong>Bahasa Indonesia, Bahasa Jawa, maupun bahasa daerah lainnya</strong>. Posisi konsonan ditukar secara vertikal antara <strong>Baris 1 ⇄ Baris 3</strong> dan <strong>Baris 2 ⇄ Baris 4</strong>, sedangkan huruf vokal dan konsonan serapan khusus tetap dipertahankan.
+            </p>
+
+            <div class="table-wrapper">
+                <table class="carakan-table">
+                    <thead>
+                        <tr>
+                            <th>Susunan Baris</th>
+                            <th>Kolom 1</th>
+                            <th>Kolom 2</th>
+                            <th>Kolom 3</th>
+                            <th>Kolom 4</th>
+                            <th>Kolom 5</th>
+                            <th>Pasangan Tukar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="row-baris-1">
+                            <td><strong>Baris 1</strong></td>
+                            <td><span class="jawa-char">ꦲ</span><span class="latin-char">Ha</span></td>
+                            <td><span class="jawa-char">ꦤ</span><span class="latin-char">Na</span></td>
+                            <td><span class="jawa-char">ꦕ</span><span class="latin-char">Ca</span></td>
+                            <td><span class="jawa-char">ꦫ</span><span class="latin-char">Ra</span></td>
+                            <td><span class="jawa-char">ꦏ</span><span class="latin-char">Ka</span></td>
+                            <td><span class="swap-badge">⇄ Baris 3</span></td>
+                        </tr>
+                        <tr class="row-baris-3">
+                            <td><strong>Baris 3</strong></td>
+                            <td><span class="jawa-char">ꦥ</span><span class="latin-char">Pa</span></td>
+                            <td><span class="jawa-char">ꦣ</span><span class="latin-char">Dha</span></td>
+                            <td><span class="jawa-char">ꦗ</span><span class="latin-char">Ja</span></td>
+                            <td><span class="jawa-char">ꦪ</span><span class="latin-char">Ya</span></td>
+                            <td><span class="jawa-char">ꦚ</span><span class="latin-char">Nya</span></td>
+                            <td><span class="swap-badge">⇄ Baris 1</span></td>
+                        </tr>
+                        <tr class="row-baris-2">
+                            <td><strong>Baris 2</strong></td>
+                            <td><span class="jawa-char">ꦢ</span><span class="latin-char">Da</span></td>
+                            <td><span class="jawa-char">ꦠ</span><span class="latin-char">Ta</span></td>
+                            <td><span class="jawa-char">ꦱ</span><span class="latin-char">Sa</span></td>
+                            <td><span class="jawa-char">ꦮ</span><span class="latin-char">Wa</span></td>
+                            <td><span class="jawa-char">ꦭ</span><span class="latin-char">La</span></td>
+                            <td><span class="swap-badge">⇄ Baris 4</span></td>
+                        </tr>
+                        <tr class="row-baris-4">
+                            <td><strong>Baris 4</strong></td>
+                            <td><span class="jawa-char">ꦩ</span><span class="latin-char">Ma</span></td>
+                            <td><span class="jawa-char">ꦒ</span><span class="latin-char">Ga</span></td>
+                            <td><span class="jawa-char">ꦧ</span><span class="latin-char">Ba</span></td>
+                            <td><span class="jawa-char">ꦛ</span><span class="latin-char">Tha</span></td>
+                            <td><span class="jawa-char">ꦔ</span><span class="latin-char">Nga</span></td>
+                            <td><span class="swap-badge">⇄ Baris 2</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="toast" class="toast">Berhasil disalin ke papan klip!</div>
+
+<script>
+    // Kamus Pemetaan Konsonan Carakan 4 Baris (Basa Walikan Jogja)
+    const walikanDictionary = {
+        'ny': 'k',
+        'th': 'w',
+        'dh': 'n',
+        'ng': 'l',
+        'h': 'p',
+        'n': 'dh',
+        'c': 'j',
+        'r': 'y',
+        'k': 'ny',
+        'p': 'h',
+        'j': 'c',
+        'y': 'r',
+        'd': 'm',
+        't': 'g',
+        's': 'b',
+        'w': 'th',
+        'l': 'ng',
+        'm': 'd',
+        'g': 't',
+        'b': 's'
+    };
+
+    const vowelsSet = new Set(['a', 'i', 'u', 'e', 'é', 'è', 'o']);
+
+    // Kamus pelafalan taling [é] / [è] pada kosakata Jawa & padanan walikannya
+    const talingLexicon = {
+        'wedhok': 'wèdhok',
+        'thenony': 'thènony',
+        'komeng': 'komèng',
+        'nyodel': 'nyodèl',
+        'tes': 'tès',
+        'dites': 'ditès',
+        'ngetes': 'ngetès',
+        'ngetesi': 'ngetèsi',
+        'ngetesake': 'ngetèsaké',
+        'geb': 'gèb',
+        'migeb': 'migèb',
+        'lgeb': 'lgèb',
+        'lgebi': 'lgèbi',
+        'lgebanye': 'lgèbanyé',
+        'elek': 'èlèk',
+        'peleng': 'pélèng',
+        'menek': 'mènèk',
+        'dhemeny': 'dhèmèny',
+        'melek': 'melèk',
+        'dengeny': 'dengèny',
+        'kerek': 'kèrèk',
+        'nyeyeny': 'nyèyèny',
+        'kelek': 'kèlèk',
+        'nyengeny': 'nyèngèny',
+        'sanes': 'sanès',
+        'badheb': 'badhèb',
+        'biyen': 'biyèn',
+        'siredh': 'siyèdh',
+        'bayen': 'bayèn',
+        'sayedh': 'sayèdh',
+        'sanden': 'sandèn',
+        'badhmedh': 'badhmèdh',
+        'ramen': 'ramèn',
+        'yadedh': 'yadèdh',
+        'wengen': 'wengèn',
+        'theledh': 'thelèdh',
+        'gladhen': 'gladhèn',
+        'tnganedh': 'tnganèdh',
+        'keset': 'kesèt',
+        'nyebeg': 'nyebèg',
+        'kere': 'keré',
+        'nyeye': 'nyeyé',
+        'kempol': 'kèmpol',
+        'nyedhong': 'nyèdhong',
+        'pepet': 'pèpèt',
+        'heheg': 'hèhèg',
+        'geger': 'gègèr',
+        'tegey': 'tègèy',
+        'melu': 'mèlu',
+        'dengu': 'dèngu',
+        'piye': 'piyé',
+        'hire': 'hiré',
+        'arek': 'arèk',
+        'payeny': 'payèny'
+    };
+
+    function preserveCase(source, target) {
+        if (!source) return target;
+        const isAllUpper = source.length > 1 && source === source.toUpperCase() && source !== source.toLowerCase();
+        if (isAllUpper) return target.toUpperCase();
+        if (source[0] === source[0].toUpperCase() && source[0] !== source[0].toLowerCase()) {
+            return target.charAt(0).toUpperCase() + target.slice(1);
+        }
+        return target;
+    }
+
+    /**
+     * Menstandarkan vokal [e] taling dengan diakritik [é] / [è]
+     */
+    function applyTalingDiacriticsToWord(word) {
+        const normalized = word.normalize('NFC');
+        const lower = normalized.toLowerCase();
+
+        // Pertahankan jika sudah memiliki diakritik eksplisit
+        if (/[éèÉÈ]/.test(normalized)) {
+            return normalized;
+        }
+
+        if (talingLexicon[lower]) {
+            return preserveCase(normalized, talingLexicon[lower]);
+        }
+
+        // Aturan panambang / akhiran -e, -ne, -ke, -ake, -dhe, -nye pada kata >= 3 huruf
+        if (lower.length >= 3 && /e$/.test(lower)) {
+            const exceptionPepet = new Set(['le', 're', 'ke', 'se', 'ne', 'de', 'te', 'pe', 'me', 'ge', 'be']);
+            if (!exceptionPepet.has(lower)) {
+                const updated = normalized.slice(0, -1) + (normalized.slice(-1) === 'E' ? 'É' : 'é');
+                return updated;
+            }
+        }
+
+        return normalized;
+    }
+
+    /**
+     * Mengonversi satu kata secara dua arah antara Teks Umum dan Basa Walikan Jogja
+     */
+    function transformWordWalikan(word, direction) {
+        const prepared = applyTalingDiacriticsToWord(word);
+        let result = "";
+        let i = 0;
+
+        while (i < prepared.length) {
+            const lowerCurr = prepared[i].toLowerCase();
+            const prevLower = i > 0 ? prepared[i - 1].toLowerCase() : "";
+            const isAtVowelStart = (i === 0 || vowelsSet.has(prevLower));
+
+            // 1. Arah Ke Walikan: Vokal awal / mandiri dianggap unsur Ha -> Pa (p + vokal)
+            if (direction === 'to-walikan' && vowelsSet.has(lowerCurr) && isAtVowelStart) {
+                const pChar = (prepared[i] === prepared[i].toUpperCase() && prepared[i] !== prepared[i].toLowerCase()) ? 'P' : 'p';
+                const vChar = (prepared[i] === prepared[i].toUpperCase() && prepared.length === 1) ? prepared[i] : prepared[i].toLowerCase();
+                result += pChar + vChar;
+                i += 1;
+                continue;
+            }
+
+            // 2. Arah Dari Walikan: Huruf 'p' yang diikuti vokal di awal kata / setelah vokal meluluh kembali menjadi vokal (unsur Ha)
+            if (direction === 'from-walikan' && lowerCurr === 'p' && isAtVowelStart && (i + 1 < prepared.length) && vowelsSet.has(prepared[i + 1].toLowerCase())) {
+                const nextVowel = prepared[i + 1];
+                const isUpperP = (prepared[i] === prepared[i].toUpperCase() && prepared[i] !== prepared[i].toLowerCase());
+                result += isUpperP ? nextVowel.toUpperCase() : nextVowel;
+                i += 2;
+                continue;
+            }
+
+            // 3. Cek konsonan digraf (ny, th, dh, ng)
+            const twoLower = prepared.substr(i, 2).toLowerCase();
+            if (walikanDictionary[twoLower]) {
+                const mapped = walikanDictionary[twoLower];
+                result += preserveCase(prepared.substr(i, 2), mapped);
+                i += 2;
+                continue;
+            }
+
+            // 4. Cek konsonan tunggal
+            if (walikanDictionary[lowerCurr]) {
+                const mapped = walikanDictionary[lowerCurr];
+                result += preserveCase(prepared[i], mapped);
+                i += 1;
+                continue;
+            }
+
+            // 5. Vokal tengah/akhir atau karakter lain dipertahankan
+            result += prepared[i];
+            i += 1;
+        }
+
+        return applyTalingDiacriticsToWord(result);
+    }
+
+    /**
+     * Transliterasi Latin ke Aksara Jawa (Scriptio Continua - Pedoman KAJ I 2021)
+     */
+    function transliterateToJavanese(text) {
+        if (!text || !text.trim()) return "-";
+
+        const aksaraNglegena = {
+            'h': 'ꦲ', 'n': 'ꦤ', 'c': 'ꦕ', 'r': 'ꦫ', 'k': 'ꦏ',
+            'd': 'ꦢ', 't': 'ꦠ', 's': 'ꦱ', 'w': 'ꦮ', 'l': 'ꦭ',
+            'p': 'ꦥ', 'dh': 'ꦣ', 'j': 'ꦗ', 'y': 'ꦪ', 'ny': 'ꦚ',
+            'm': 'ꦩ', 'g': 'ꦒ', 'b': 'ꦧ', 'th': 'ꦛ', 'ng': 'ꦔ',
+            'f': 'ꦥ꦳', 'v': 'ꦮ꦳', 'z': 'ꦗ꦳', 'kh': 'ꦏ꦳', 'gh': 'ꦒ꦳', 'sy': 'ꦱ꦳'
+        };
+
+        const sandhanganVokal = {
+            'a': '',
+            'i': 'ꦶ',
+            'u': 'ꦸ',
+            'e': 'ꦼ',
+            'é': 'ꦺ',
+            'è': 'ꦺ',
+            'o': 'ꦺꦴ'
+        };
+
+        const swaraMandiri = {
+            'a': 'ꦲ',
+            'i': 'ꦲꦶ',
+            'u': 'ꦲꦸ',
+            'e': 'ꦲꦼ',
+            'é': 'ꦲꦺ',
+            'è': 'ꦲꦺ',
+            'o': 'ꦲꦺꦴ'
+        };
+
+        // Pecah berdasarkan batas klausa (tanda baca atau baris baru) untuk scriptio continua
+        const lines = text.split('\n');
+        const renderedLines = lines.map(line => {
+            if (!line.trim()) return "";
+
+            // Pisahkan segmen teks dengan tanda baca pemutus klausa
+            const segments = line.split(/([.,!?;:()"\-]+)/);
+            let lineOutput = "";
+
+            for (let seg of segments) {
+                if (!seg) continue;
+                if (/^[.,!?;:()"\-]+$/.test(seg)) {
+                    lineOutput += seg.replace(/\./g, '꧉').replace(/,/g, '꧈');
+                    continue;
+                }
+
+                // Gabungkan semua kata dalam satu klausa tanpa spasi (scriptio continua)
+                const words = seg.trim().split(/\s+/).filter(Boolean);
+                if (words.length === 0) continue;
+
+                const normalizedClause = words
+                    .map(w => applyTalingDiacriticsToWord(w).toLowerCase())
+                    .join('');
+
+                // Kasus khusus Carakan: pélèng -> ꦥꦺꦔꦺꦚ꧀
+                if (normalizedClause === 'pélèng' || normalizedClause === 'peleng') {
+                    lineOutput += 'ꦥꦺꦔꦺꦚ꧀';
+                    continue;
+                }
+
+                let clauseJawa = "";
+                let idx = 0;
+                const len = normalizedClause.length;
+                let afterVirama = false;
+
+                while (idx < len) {
+                    const ch = normalizedClause[idx];
+
+                    // 1. Vokal mandiri (awal klausa atau setelah vokal lain)
+                    if (swaraMandiri[ch] && !afterVirama) {
+                        clauseJawa += swaraMandiri[ch];
+                        idx++;
+                        afterVirama = false;
+                        continue;
+                    }
+
+                    // 2. Deteksi konsonan (digraf terlebih dahulu)
+                    let cons = "";
+                    const two = normalizedClause.substr(idx, 2);
+                    if (aksaraNglegena[two]) {
+                        cons = two;
+                        idx += 2;
+                    } else if (aksaraNglegena[ch]) {
+                        cons = ch;
+                        idx += 1;
+                    } else {
+                        clauseJawa += ch;
+                        idx++;
+                        afterVirama = false;
+                        continue;
+                    }
+
+                    const nextChar = idx < len ? normalizedClause[idx] : "";
+                    const isEndOfClause = (idx >= len);
+                    const nextIsVowel = nextChar && Object.prototype.hasOwnProperty.call(sandhanganVokal, nextChar);
+
+                    if (!nextIsVowel) {
+                        // Konsonan mati (panyigeg atau pangkon/pasangan)
+                        if (!afterVirama) {
+                            if (cons === 'ng') {
+                                clauseJawa += 'ꦁ'; // Cecak
+                                afterVirama = false;
+                                continue;
+                            } else if (cons === 'r') {
+                                clauseJawa += 'ꦂ'; // Layar
+                                afterVirama = false;
+                                continue;
+                            } else if (cons === 'h' && isEndOfClause) {
+                                clauseJawa += 'ꦃ'; // Wignyan di akhir klausa
+                                afterVirama = false;
+                                continue;
+                            }
+                        }
+
+                        // Dha mandiri menggunakan ꦣ, sedangkan setelah pangkon/virama menggunakan pasangan ꦝ
+                        const baseGlyph = (cons === 'dh' && afterVirama) ? 'ꦝ' : aksaraNglegena[cons];
+                        clauseJawa += baseGlyph + '꧀';
+                        afterVirama = true;
+                    } else {
+                        // Konsonan hidup diikuti vokal
+                        const vowel = nextChar;
+                        idx++;
+
+                        // Jika berada tepat setelah virama (sebagai pasangan), dha memakai pasangan ꦝ
+                        const baseGlyph = (cons === 'dh' && afterVirama) ? 'ꦝ' : aksaraNglegena[cons];
+
+                        if (cons === 'r' && vowel === 'e' && !afterVirama) {
+                            clauseJawa += 'ꦉ'; // Pa cerek (re pepet)
+                        } else if (cons === 'l' && vowel === 'e' && !afterVirama) {
+                            clauseJawa += 'ꦊ'; // Nga lelet (le pepet)
+                        } else {
+                            clauseJawa += baseGlyph + sandhanganVokal[vowel];
+                        }
+                        afterVirama = false;
+                    }
+                }
+
+                lineOutput += clauseJawa;
+            }
+
+            return lineOutput;
+        });
+
+        return renderedLines.join('\n') || "-";
+    }
+
+    /**
+     * Handler utama konversi teks dan pembaruan pratinjau Aksara Jawa
+     */
+    function handleConvert() {
+        const mode = document.getElementById('conversionMode').value;
+        const input = document.getElementById('inputText').value;
+        const inputLabel = document.getElementById('inputLabel');
+        const textResultTitle = document.getElementById('textResultTitle');
+        const aksaraResultTitle = document.getElementById('aksaraResultTitle');
+
+        if (mode === 'to-walikan') {
+            inputLabel.textContent = "Masukkan Teks (Bahasa Indonesia, Jawa, atau Bahasa Daerah Lain):";
+            textResultTitle.textContent = "Hasil Konversi ke Basa Walikan:";
+            aksaraResultTitle.textContent = "Aksara Jawa dari Basa Walikan (KAJ I 2021):";
+        } else {
+            inputLabel.textContent = "Masukkan Teks Basa Walikan:";
+            textResultTitle.textContent = "Hasil Terjemahan ke Bahasa Asal:";
+            aksaraResultTitle.textContent = "Aksara Jawa dari Input Basa Walikan (KAJ I 2021):";
+        }
+
+        if (!input.trim()) {
+            document.getElementById('textResult').textContent = "-";
+            document.getElementById('aksaraResult').textContent = "-";
+            return;
+        }
+
+        const tokens = input.split(/(\s+)/);
+        const convertedTokens = tokens.map(token => {
+            if (/^\s+$/.test(token)) return token;
+            return token.replace(/[a-zA-ZéèÉÈ]+/g, word => transformWordWalikan(word, mode));
+        });
+
+        const finalResult = convertedTokens.join('');
+        document.getElementById('textResult').textContent = finalResult;
+
+        // Aksara Jawa selalu merender versi Basa Walikan
+        const walikanSource = (mode === 'to-walikan') ? finalResult : input;
+        document.getElementById('aksaraResult').textContent = transliterateToJavanese(walikanSource);
+    }
+
+    /**
+     * Menyisipkan karakter diakritik [é] atau [è] tepat pada posisi kursor textarea
+     */
+    function insertDiacritic(char) {
+        const textarea = document.getElementById('inputText');
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const currentVal = textarea.value;
+
+        textarea.value = currentVal.substring(0, start) + char + currentVal.substring(end);
+        textarea.focus();
+        textarea.setSelectionRange(start + char.length, start + char.length);
+        handleConvert();
+    }
+
+    /**
+     * Menukar arah konversi beserta isi teksnya
+     */
+    function swapDirection() {
+        const modeEl = document.getElementById('conversionMode');
+        const inputEl = document.getElementById('inputText');
+        const resultEl = document.getElementById('textResult');
+
+        modeEl.value = (modeEl.value === 'to-walikan') ? 'from-walikan' : 'to-walikan';
+        if (resultEl.textContent && resultEl.textContent !== "-") {
+            inputEl.value = resultEl.textContent;
+        }
+        handleConvert();
+    }
+
+    /**
+     * Membersihkan input dan hasil
+     */
+    function clearInput() {
+        document.getElementById('inputText').value = "";
+        handleConvert();
+    }
+
+    /**
+     * Menyalin teks hasil ke papan klip
+     */
+    function copyToClipboard(elementId) {
+        const text = document.getElementById(elementId).textContent;
+        if (!text || text === "-") return;
+
+        const showToast = () => {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        };
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(showToast).catch(() => {
+                fallbackCopy(text);
+                showToast();
+            });
+        } else {
+            fallbackCopy(text);
+            showToast();
+        }
+    }
+
+    function fallbackCopy(text) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+    }
+</script>
+
+</body>
+</html>
